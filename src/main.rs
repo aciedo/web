@@ -6,11 +6,15 @@ async fn main() -> std::io::Result<()> {
     use leptos::*;
     use leptos_actix::{generate_route_list, LeptosRoutes};
     use leptos_start::app::*;
+    use tracing::info;
+    
+    tracing_subscriber::fmt::init();
 
     let conf = get_configuration(None).await.unwrap();
     let addr = conf.leptos_options.site_addr;
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(|cx| view! { cx, <App/> });
+    info!("Starting server at {}", addr);
 
     HttpServer::new(move || {
         let leptos_options = &conf.leptos_options;
@@ -24,7 +28,7 @@ async fn main() -> std::io::Result<()> {
                 |cx| view! { cx, <App/> },
             )
             .service(Files::new("/", site_root))
-        //.wrap(middleware::Compress::default())
+            .wrap(middleware::Compress::default())
     })
     .bind(&addr)?
     .run()

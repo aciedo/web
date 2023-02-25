@@ -36,7 +36,10 @@ fn HomePage(cx: Scope) -> impl IntoView {
     let on_click = move |_| set_count.update(|count| *count += 1);
 
     view! { cx,
-        <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
+        <h1>"Welcome to Leptos! You have pressed the button "{count}" times"</h1>
+        <button on:click=on_click>"Click Me"</button>
+        // text box to enter the user's phone number (autofill supported)
+        <input type="tel" name="phone" placeholder="Phone Number" autocomplete="tel"/>
+        
     }
 }
