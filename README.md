@@ -3,7 +3,7 @@
 This example creates a basic clone of the Hacker News site. It showcases Leptos' ability to create both a client-side rendered app, and a server side rendered app with hydration, in a single repository
 
 ## Client Side Rendering
-To run it as a Client Side App, you can issue  `trunk serve --open` in the root. This will build the entire
+To run it as a Client Side App, you can issue  `trunk serve --open --release --port 3000` in the root. This will build the entire
 app into one CSR bundle. Make sure you have trunk installed with `cargo install trunk`.
 
 ## Server Side Rendering with cargo-leptos

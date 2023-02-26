@@ -8,7 +8,7 @@ pub fn User(cx: Scope) -> impl IntoView {
     let params = use_params_map(cx);
     let user = create_resource(
         cx,
-        move || params().get("id").cloned().unwrap_or_default(),
+        move || params().get("id").cloned().unwrap_or("87a7add4-0988-4d81-ba8e-621af24f6c29".to_string()),
         move |id| async move {
             if id.is_empty() {
                 None

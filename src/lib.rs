@@ -23,7 +23,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <Nav />
                 <main>
                     <Routes>
-                        <Route path="users/:id" view=|cx| view! { cx,  <User/> }/>
+                        <Route path=":id?" view=|cx| view! { cx,  <User/> }/>
                         // <Route path="stories/:id" view=|cx| view! { cx,  <Story/> }/>
                         // <Route path=":stories?" view=|cx| view! { cx,  <Stories/> }/>
                     </Routes>
