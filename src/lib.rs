@@ -5,8 +5,8 @@ use leptos_router::*;
 mod api;
 mod routes;
 use routes::nav::*;
-use routes::stories::*;
-use routes::story::*;
+// use routes::stories::*;
+// use routes::story::*;
 use routes::users::*;
 
 #[component]
@@ -15,7 +15,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     view! {
         cx,
         <>
-            <Stylesheet id="leptos" href="/pkg/hackernews.css"/>
+            <Stylesheet id="leptos" href="/pkg/valera_web.css"/>
             <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
             <Meta name="description" content="Leptos implementation of a HackerNews demo."/>
             <Router>
@@ -23,8 +23,8 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <main>
                     <Routes>
                         <Route path="users/:id" view=|cx| view! { cx,  <User/> }/>
-                        <Route path="stories/:id" view=|cx| view! { cx,  <Story/> }/>
-                        <Route path=":stories?" view=|cx| view! { cx,  <Stories/> }/>
+                        // <Route path="stories/:id" view=|cx| view! { cx,  <Story/> }/>
+                        // <Route path=":stories?" view=|cx| view! { cx,  <Stories/> }/>
                     </Routes>
                 </main>
             </Router>

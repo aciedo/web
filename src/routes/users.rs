@@ -1,4 +1,5 @@
-use crate::api::{self, User};
+use crate::api::fetch;
+use interface::v1::profile::{Profile, GetProfileByIdReq};
 use leptos::*;
 use leptos_router::*;
 
@@ -12,7 +13,9 @@ pub fn User(cx: Scope) -> impl IntoView {
             if id.is_empty() {
                 None
             } else {
-                api::fetch_api::<User>(cx, &api::user(&id)).await
+                fetch::<Profile, GetProfileByIdReq, 24>(cx, "http://localhost:8080/v1/profile/id", GetProfileByIdReq {
+                    id: id.parse().unwrap(),
+                }).await
             }
         },
     );
@@ -23,16 +26,16 @@ pub fn User(cx: Scope) -> impl IntoView {
                     None => view! { cx,  <h1>"User not found."</h1> }.into_any(),
                     Some(user) => view! { cx,
                         <div>
-                            <h1>"User: " {&user.id}</h1>
-                            <ul class="meta">
-                                <li>
-                                    <span class="label">"Created: "</span> {user.created}
-                                </li>
-                                <li>
-                                <span class="label">"Karma: "</span> {user.karma}
-                                </li>
-                                {user.about.as_ref().map(|about| view! { cx,  <li inner_html=about class="about"></li> })}
-                            </ul>
+                            <h1>"User: " {&user.name}" (id "{&user.id.to_string()}")"</h1>
+                            // <ul class="meta">
+                            //     <li>
+                            //         <span class="label">"Created: "</span> {user.created}
+                            //     </li>
+                            //     <li>
+                            //     <span class="label">"Karma: "</span> {user.karma}
+                            //     </li>
+                            //     {user.about.as_ref().map(|about| view! { cx,  <li inner_html=about class="about"></li> })}
+                            // </ul>
                             <p class="links">
                                 <a href=format!("https://news.ycombinator.com/submitted?id={}", user.id)>"submissions"</a>
                                 " | "

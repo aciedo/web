@@ -32,7 +32,7 @@ pub fn Stories(cx: Scope) -> impl IntoView {
         move || (page(), story_type()),
         move |(page, story_type)| async move {
             let path = format!("{}?page={}", category(&story_type), page);
-            api::fetch_api::<Vec<api::Story>>(cx, &api::story(&path)).await
+            api::fetch::<Vec<api::Story>>(cx, &api::story(&path)).await
         },
     );
     let (pending, set_pending) = create_signal(cx, false);
