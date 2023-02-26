@@ -17,6 +17,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         <>
             <Stylesheet id="leptos" href="/pkg/valera_web.css"/>
             <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
+            <Link rel="preconnect" href="http://127.0.0.1:8080/"/>
             <Meta name="description" content="Leptos implementation of a HackerNews demo."/>
             <Router>
                 <Nav />

@@ -19,7 +19,7 @@ where
     let abort_controller = web_sys::AbortController::new().ok();
     let abort_signal = abort_controller.as_ref().map(|a| a.signal());
 
-    let bytes = gloo_net::http::Request::get(path)
+    let bytes = gloo_net::http::Request::post(path)
         .abort_signal(abort_signal.as_ref())
         .body(Uint8Array::from(to_bytes(&body).ok()?.as_slice()))
         .send()
@@ -51,7 +51,7 @@ where
     let client = reqwest::Client::new();
     let start = std::time::Instant::now();
     let bytes = client
-        .get(path)
+        .post(path)
         .body(to_bytes(&body).ok()?.to_vec())
         .send()
         .await
