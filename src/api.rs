@@ -50,12 +50,11 @@ where
     use crate::{CLIENT, DEV_MODE};
     use reqwest::{Certificate, Client};
 
-    let start = std::time::Instant::now();
     let client = CLIENT.get_or_init(|| {
         let dev =
             DEV_MODE.get_or_init(|| std::env::var("DEV").unwrap_or("false".to_string()) == "true");
         let mut client = Client::builder()
-            .pool_max_idle_per_host(2)
+            .pool_max_idle_per_host(100)
             .http2_prior_knowledge();
         if dev.clone() {
             let cert = std::fs::read("../platform/cert.pem").expect("failed to read cert");
@@ -75,6 +74,5 @@ where
         .bytes()
         .await
         .ok()?;
-    log::info!("fetch took {:?}", start.elapsed());
     from_bytes::<T>(&bytes).ok()
 }
