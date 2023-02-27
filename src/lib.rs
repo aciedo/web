@@ -9,6 +9,14 @@ use routes::nav::*;
 // use routes::story::*;
 use routes::users::*;
 
+cfg_if!(
+    if #[cfg(feature = "ssr")] {
+        use once_cell::sync::OnceCell;
+        use reqwest::Client;
+        pub static CLIENT: OnceCell<Client> = OnceCell::new();
+    }
+);
+
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
     provide_meta_context(cx);

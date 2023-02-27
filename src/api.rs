@@ -48,9 +48,11 @@ where
     T::Archived: for<'b> CheckBytes<DefaultValidator<'b>> + Deserialize<T, SharedDeserializeMap>,
     K: Serialize<AllocSerializer<N>>,
 {
-    let client = reqwest::Client::new();
+    use reqwest::Client;
+    use crate::CLIENT;
+
     let start = std::time::Instant::now();
-    let bytes = client
+    let bytes = CLIENT.get_or_init(|| Client::new())
         .post(path)
         .body(to_bytes(&body).ok()?.to_vec())
         .send()

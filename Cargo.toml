@@ -34,10 +34,11 @@ web-sys = { version = "0.3", features = ["AbortController", "AbortSignal"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3.16", optional = true }
 js-sys = "0.3.61"
+once_cell = { version = "1.17.1", optional = true }
 [features]
 csr = ["leptos/csr", "leptos_meta/csr", "leptos_router/csr"]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
-ssr = ["dep:actix-files", "dep:actix-web", "dep:reqwest", "dep:tracing-subscriber", "dep:leptos_actix", "leptos/ssr", "leptos_meta/ssr", "leptos_router/ssr"]
+ssr = ["dep:actix-files", "dep:actix-web", "dep:once_cell", "dep:reqwest", "dep:tracing-subscriber", "dep:leptos_actix", "leptos/ssr", "leptos_meta/ssr", "leptos_router/ssr"]
 
 [package.metadata.cargo-all-features]
 denylist = ["actix-files", "actix-web", "leptos_actix"]
