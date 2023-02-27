@@ -1,12 +1,11 @@
 use bytecheck::CheckBytes;
-use leptos::{Scope, Serializable};
-use rkyv::{
-    de::deserializers::SharedDeserializeMap, ser::serializers::AllocSerializer,
-    validation::validators::DefaultValidator, Archive, Deserialize, Serialize,
-    from_bytes, to_bytes
-};
 #[cfg(not(feature = "ssr"))]
 use js_sys::Uint8Array;
+use leptos::{Scope, Serializable};
+use rkyv::{
+    de::deserializers::SharedDeserializeMap, from_bytes, ser::serializers::AllocSerializer,
+    to_bytes, validation::validators::DefaultValidator, Archive, Deserialize, Serialize,
+};
 
 #[cfg(not(feature = "ssr"))]
 pub async fn fetch<T, K, const N: usize>(cx: Scope, path: &str, body: K) -> Option<T>
@@ -48,11 +47,25 @@ where
     T::Archived: for<'b> CheckBytes<DefaultValidator<'b>> + Deserialize<T, SharedDeserializeMap>,
     K: Serialize<AllocSerializer<N>>,
 {
-    use reqwest::Client;
-    use crate::CLIENT;
+    use crate::{CLIENT, DEV_MODE};
+    use reqwest::{Certificate, Client};
 
     let start = std::time::Instant::now();
-    let bytes = CLIENT.get_or_init(|| Client::new())
+    let client = CLIENT.get_or_init(|| {
+        let dev =
+            DEV_MODE.get_or_init(|| std::env::var("DEV").unwrap_or("false".to_string()) == "true");
+        let mut client = Client::builder()
+            .pool_max_idle_per_host(2)
+            .http2_prior_knowledge();
+        if dev.clone() {
+            let cert = std::fs::read("../platform/cert.pem").expect("failed to read cert");
+            client = client
+                .danger_accept_invalid_certs(dev.clone())
+                .add_root_certificate(Certificate::from_pem(&cert).expect("failed to parse cert"));
+        }
+        client.build().expect("failed to build client")
+    });
+    let bytes = client
         .post(path)
         .body(to_bytes(&body).ok()?.to_vec())
         .send()

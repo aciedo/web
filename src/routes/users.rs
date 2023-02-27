@@ -13,7 +13,7 @@ pub fn User(cx: Scope) -> impl IntoView {
             if id.is_empty() {
                 None
             } else {
-                fetch::<Profile, GetProfileByIdReq, 24>(cx, "http://localhost:8080/v1/profile/id", GetProfileByIdReq {
+                fetch::<Profile, GetProfileByIdReq, 24>(cx, "https://localhost:8080/v1/profile/id", GetProfileByIdReq {
                     id: id.parse().unwrap(),
                 }).await
             }
