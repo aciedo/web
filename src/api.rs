@@ -1,10 +1,10 @@
-use bytecheck::CheckBytes;
 #[cfg(not(feature = "ssr"))]
 use js_sys::Uint8Array;
 use leptos::{Scope, Serializable};
 use rkyv::{
     de::deserializers::SharedDeserializeMap, from_bytes, ser::serializers::AllocSerializer,
     to_bytes, validation::validators::DefaultValidator, Archive, Deserialize, Serialize,
+    CheckBytes
 };
 
 #[cfg(not(feature = "ssr"))]
