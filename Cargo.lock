@@ -1087,7 +1087,7 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 [[package]]
 name = "leptos"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "cfg-if",
  "leptos_config",
@@ -1102,7 +1102,7 @@ dependencies = [
 [[package]]
 name = "leptos_actix"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "actix-web",
  "futures 0.3.26",
@@ -1117,7 +1117,7 @@ dependencies = [
 [[package]]
 name = "leptos_config"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "config",
  "fs",
@@ -1130,7 +1130,7 @@ dependencies = [
 [[package]]
 name = "leptos_dom"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "async-recursion",
  "cfg-if",
@@ -1157,7 +1157,7 @@ dependencies = [
 [[package]]
 name = "leptos_integration_utils"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "futures 0.3.26",
  "leptos",
@@ -1169,7 +1169,7 @@ dependencies = [
 [[package]]
 name = "leptos_macro"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "cfg-if",
  "convert_case 0.6.0",
@@ -1190,7 +1190,7 @@ dependencies = [
 [[package]]
 name = "leptos_meta"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "cfg-if",
  "leptos",
@@ -1203,7 +1203,7 @@ dependencies = [
 [[package]]
 name = "leptos_reactive"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "base64 0.21.0",
  "bytecheck",
@@ -1226,7 +1226,7 @@ dependencies = [
 [[package]]
 name = "leptos_router"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "cfg-if",
  "common_macros",
@@ -1251,7 +1251,7 @@ dependencies = [
 [[package]]
 name = "leptos_server"
 version = "0.2.0"
-source = "git+https://github.com/valeralabs/leptos#0071e29daa4c4ff26dca5f61c57a680bce9db869"
+source = "git+https://github.com/leptos-rs/leptos#ab6ddc11949af66ce1e27e5f3f9d1e3fe94fe1f1"
 dependencies = [
  "ciborium",
  "form_urlencoded",

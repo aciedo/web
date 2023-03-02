@@ -1,5 +1,5 @@
 use crate::api::fetch;
-use interface::v1::profile::{Profile, GetProfileByIdReq};
+use interface::v1::profile::{GetProfileByIdReq, GetProfileByIdRes};
 use leptos::*;
 use leptos_router::*;
 
@@ -13,9 +13,9 @@ pub fn User(cx: Scope) -> impl IntoView {
             if id.is_empty() {
                 None
             } else {
-                fetch::<Profile, GetProfileByIdReq, 24>(cx, "https://localhost:8080/v1/profile/id", GetProfileByIdReq {
+                fetch::<GetProfileByIdRes, GetProfileByIdReq, 24>(cx, "https://localhost:8080/v1/profile/id", GetProfileByIdReq {
                     id: id.parse().unwrap(),
-                }).await
+                }).await.map(|res| res.profile).flatten()
             }
         },
     );

@@ -14,13 +14,13 @@ console_log = "0.2"
 console_error_panic_hook = "0.1"
 futures = "0.3"
 cfg-if = "1"
-leptos = { git = "https://github.com/valeralabs/leptos", default-features = false, features = [
+leptos = { git = "https://github.com/leptos-rs/leptos", default-features = false, features = [
 	"rkyv",
 ] }
-leptos_meta = { git = "https://github.com/valeralabs/leptos", default-features = false }
-leptos_actix = { git = "https://github.com/valeralabs/leptos", default-features = false, optional = true }
-leptos_router = { git = "https://github.com/valeralabs/leptos", default-features = false }
-interface = { path = "../platform/lib/interface", default-features = false, features = ["wasm"] }
+leptos_meta = { git = "https://github.com/leptos-rs/leptos", default-features = false }
+leptos_actix = { git = "https://github.com/leptos-rs/leptos", default-features = false, optional = true }
+leptos_router = { git = "https://github.com/leptos-rs/leptos", default-features = false }
+interface = { git = "https://github.com/valeralabs/interface", default-features = false, features = ["wasm"] }
 log = "0.4"
 simple_logger = "4.0.0"
 serde = { version = "1", features = ["derive"] }

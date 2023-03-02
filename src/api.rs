@@ -59,7 +59,7 @@ where
         if dev.clone() {
             let cert = std::fs::read("../platform/cert.pem").expect("failed to read cert");
             client = client
-                .danger_accept_invalid_certs(dev.clone())
+                .danger_accept_invalid_certs(true)
                 .add_root_certificate(Certificate::from_pem(&cert).expect("failed to parse cert"));
         }
         client.build().expect("failed to build client")
