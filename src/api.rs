@@ -3,8 +3,8 @@ use js_sys::Uint8Array;
 use leptos::{Scope, Serializable};
 use rkyv::{
     de::deserializers::SharedDeserializeMap, from_bytes, ser::serializers::AllocSerializer,
-    to_bytes, validation::validators::DefaultValidator, Archive, Deserialize, Serialize,
-    CheckBytes
+    to_bytes, validation::validators::DefaultValidator, Archive, CheckBytes, Deserialize,
+    Serialize,
 };
 
 #[cfg(not(feature = "ssr"))]
@@ -48,31 +48,27 @@ where
     K: Serialize<AllocSerializer<N>>,
 {
     use crate::{CLIENT, DEV_MODE};
-    use reqwest::{Certificate, Client};
+    use reqwest::Client;
 
     let dev =
         DEV_MODE.get_or_init(|| std::env::var("DEV").unwrap_or("false".to_string()) == "true");
-    
-    let host = String::from(if dev.clone() {
-        "https://localhost:8080"
+
+    let host = if dev.clone() {
+        std::env::var("API_HOST").unwrap_or("localhost:8080".to_string())
     } else {
-        "https://api.valera.co"
-    });
+        "api.valera.co".to_string()
+    };
 
     let client = CLIENT.get_or_init(|| {
-        let mut client = Client::builder()
+        Client::builder()
             .pool_max_idle_per_host(100)
-            .http2_prior_knowledge();
-        if dev.clone() {
-            let cert = std::fs::read("../platform/cert.pem").expect("failed to read cert");
-            client = client
-                .danger_accept_invalid_certs(true)
-                .add_root_certificate(Certificate::from_pem(&cert).expect("failed to parse cert"));
-        }
-        client.build().expect("failed to build client")
+            .http2_prior_knowledge()
+            .danger_accept_invalid_certs(dev.clone())
+            .build()
+            .expect("failed to build client")
     });
     let bytes = client
-        .post(host + path)
+        .post(format!("https://{host}{path}"))
         .body(to_bytes(&body).ok()?.to_vec())
         .send()
         .await
