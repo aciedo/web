@@ -50,9 +50,16 @@ where
     use crate::{CLIENT, DEV_MODE};
     use reqwest::{Certificate, Client};
 
+    let dev =
+        DEV_MODE.get_or_init(|| std::env::var("DEV").unwrap_or("false".to_string()) == "true");
+    
+    let host = String::from(if dev.clone() {
+        "https://localhost:8080"
+    } else {
+        "https://api.valera.co"
+    });
+
     let client = CLIENT.get_or_init(|| {
-        let dev =
-            DEV_MODE.get_or_init(|| std::env::var("DEV").unwrap_or("false".to_string()) == "true");
         let mut client = Client::builder()
             .pool_max_idle_per_host(100)
             .http2_prior_knowledge();
@@ -65,7 +72,7 @@ where
         client.build().expect("failed to build client")
     });
     let bytes = client
-        .post(path)
+        .post(host + path)
         .body(to_bytes(&body).ok()?.to_vec())
         .send()
         .await
