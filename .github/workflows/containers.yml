@@ -22,9 +22,6 @@ env:
 
 jobs:
   build:
-    strategy:
-        matrix:
-          crate: ["api"]
     runs-on: ubuntu-latest
     permissions:
       contents: read
