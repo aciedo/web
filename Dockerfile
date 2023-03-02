@@ -8,7 +8,7 @@ COPY . .
 RUN cargo install cargo-leptos
 RUN rustup target add wasm32-unknown-unknown
 RUN cargo leptos build -r
-RUN cargo install --path .
+RUN cargo install --path . --no-default-features --features ssr
 
 FROM gcr.io/distroless/cc-debian10
 
