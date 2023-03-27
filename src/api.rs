@@ -50,24 +50,13 @@ where
     use crate::{CLIENT, DEV_MODE};
     use reqwest::Client;
 
-    let dev =
-        DEV_MODE.get_or_init(|| std::env::var("DEV").unwrap_or("false".to_string()) == "true");
-
-    let host = if dev.clone() {
+    let host = if DEV_MODE.clone() {
         std::env::var("API_HOST").unwrap_or("localhost:8080".to_string())
     } else {
         "api.valera.co".to_string()
     };
 
-    let client = CLIENT.get_or_init(|| {
-        Client::builder()
-            .pool_max_idle_per_host(100)
-            .http2_prior_knowledge()
-            .danger_accept_invalid_certs(dev.clone())
-            .build()
-            .expect("failed to build client")
-    });
-    let bytes = client
+    let bytes = CLIENT
         .post(format!("https://{host}{path}"))
         .body(to_bytes(&body).ok()?.to_vec())
         .send()

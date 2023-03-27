@@ -11,10 +11,22 @@ use routes::users::*;
 
 cfg_if!(
     if #[cfg(feature = "ssr")] {
-        use once_cell::sync::OnceCell;
+        #![feature(once_cell)]
+
+        use std::sync::LazyLock;
         use reqwest::Client;
-        pub static CLIENT: OnceCell<Client> = OnceCell::new();
-        pub static DEV_MODE: OnceCell<bool> = OnceCell::new();
+        
+        pub static CLIENT: LazyLock<Client> = LazyLock::new(|| {
+            Client::builder()
+                .pool_max_idle_per_host(100)
+                .http2_prior_knowledge()
+                .danger_accept_invalid_certs(DEV_MODE)
+                .build()
+                .expect("failed to build client")
+        });
+        pub static DEV_MODE: LazyLock<bool> = LazyLock::new(|| {
+            std::env::var("DEV").unwrap_or("false".to_string()) == "true"
+        });
     }
 );
 
