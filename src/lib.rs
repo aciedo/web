@@ -1,3 +1,4 @@
+#![feature(once_cell)]
 use cfg_if::cfg_if;
 use leptos::{component, view, IntoView, Scope};
 use leptos_meta::*;
@@ -11,8 +12,6 @@ use routes::users::*;
 
 cfg_if!(
     if #[cfg(feature = "ssr")] {
-        #![feature(once_cell)]
-
         use std::sync::LazyLock;
         use reqwest::Client;
         
@@ -20,10 +19,11 @@ cfg_if!(
             Client::builder()
                 .pool_max_idle_per_host(100)
                 .http2_prior_knowledge()
-                .danger_accept_invalid_certs(DEV_MODE)
+                .danger_accept_invalid_certs(*DEV_MODE)
                 .build()
                 .expect("failed to build client")
         });
+        
         pub static DEV_MODE: LazyLock<bool> = LazyLock::new(|| {
             std::env::var("DEV").unwrap_or("false".to_string()) == "true"
         });

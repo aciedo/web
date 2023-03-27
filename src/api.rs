@@ -48,7 +48,6 @@ where
     K: Serialize<AllocSerializer<N>>,
 {
     use crate::{CLIENT, DEV_MODE};
-    use reqwest::Client;
 
     let host = if DEV_MODE.clone() {
         std::env::var("API_HOST").unwrap_or("localhost:8080".to_string())
