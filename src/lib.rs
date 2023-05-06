@@ -1,4 +1,4 @@
-#![feature(once_cell)]
+#![feature(lazy_cell)]
 use cfg_if::cfg_if;
 use leptos::{component, view, IntoView, Scope};
 use leptos_meta::*;
