@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for valera-web on 2023-07-22T15:13:52+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "valera-web"
+primary_region = "lhr"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  [http_service.concurrency]
+      type = "requests"
+      soft_limit = 200
+      hard_limit = 250
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "5s"
+    method = "GET"
+    timeout = "5s"
+    path = "/"
