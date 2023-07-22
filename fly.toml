@@ -23,3 +23,10 @@ primary_region = "lhr"
     method = "GET"
     timeout = "5s"
     path = "/"
+
+[[statics]]
+    guest_path = "site/static"
+    url_prefix = "/static"
+
+[deploy]
+    strategy = "bluegreen"
