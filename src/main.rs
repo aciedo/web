@@ -1,61 +1,45 @@
-use cfg_if::cfg_if;
-use leptos::*;
-use tracing::info;
+#[cfg(feature = "ssr")]
+#[tokio::main]
+async fn main() {
+    use axum::{routing::post, Router};
+    use leptos::*;
+    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use web::app::*;
+    use web::fileserv::file_and_error_handler;
+    use tower_http::compression::CompressionLayer;
 
-// boilerplate to run in different modes
-cfg_if! {
-    // server-only stuff
-    if #[cfg(feature = "ssr")] {
-        use actix_files::{Files};
-        use actix_web::*;
-        use valera_web::{App,AppProps};
-        use leptos_actix::{LeptosRoutes, generate_route_list};
+    simple_logger::init_with_level(log::Level::Info).expect("couldn't initialize logging");
 
-        #[get("/style.css")]
-        async fn css() -> impl Responder {
-            actix_files::NamedFile::open_async("./style.css").await
-        }
-        #[get("/favicon.ico")]
-        async fn favicon() -> impl Responder {
-            actix_files::NamedFile::open_async("./target/site//favicon.ico").await
-        }
+    // Setting get_configuration(None) means we'll be using cargo-leptos's env values
+    // For deployment these variables are:
+    // <https://github.com/leptos-rs/start-axum#executing-a-server-on-a-remote-machine-without-the-toolchain>
+    // Alternately a file can be specified such as Some("Cargo.toml")
+    // The file would need to be included with the executable when moved to deployment
+    let conf = get_configuration(None).await.unwrap();
+    let leptos_options = conf.leptos_options;
+    let addr = leptos_options.site_addr;
+    let routes = generate_route_list(|cx| view! { cx, <App/> }).await;
 
-        #[actix_web::main]
-        async fn main() -> std::io::Result<()> {
-            tracing_subscriber::fmt::init();
+    // build our application with a route
+    let app = Router::new()
+        .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
+        .leptos_routes(&leptos_options, routes, |cx| view! { cx, <App/> })
+        .layer(CompressionLayer::new())
+        .fallback(file_and_error_handler)
+        .with_state(leptos_options);
 
-            // Setting this to None means we'll be using cargo-leptos and its env vars.
-            let conf = get_configuration(None).await.unwrap();
+    // run our app with hyper
+    // `axum::Server` is a re-export of `hyper::Server`
+    log!("listening on http://{}", &addr);
+    axum::Server::bind(&addr)
+        .serve(app.into_make_service())
+        .await
+        .unwrap();
+}
 
-            let addr = conf.leptos_options.site_addr.clone();
-            // Generate the list of routes in your Leptos App
-            let routes = generate_route_list(|cx| view! { cx, <App/> });
-
-            info!("Starting server at {}", addr);
-
-            HttpServer::new(move || {
-                let leptos_options = &conf.leptos_options;
-                let site_root = &leptos_options.site_root;
-
-                App::new()
-                    .service(css)
-                    .service(favicon)
-                    .route("/api/{tail:.*}", leptos_actix::handle_server_fns())
-                    .leptos_routes(leptos_options.to_owned(), routes.to_owned(), |cx| view! { cx, <App/> })
-                    .service(Files::new("/", &site_root))
-                    .wrap(middleware::Compress::default())
-            })
-            .bind(&addr)?
-            .run()
-            .await
-        }
-    } else {
-        fn main() {
-            use valera_web::{App, AppProps};
-
-            _ = console_log::init_with_level(log::Level::Debug);
-            console_error_panic_hook::set_once();
-            mount_to_body(|cx| view! { cx, <App/> })
-        }
-    }
+#[cfg(not(feature = "ssr"))]
+pub fn main() {
+    // no client-side main function
+    // unless we want this to work with e.g., Trunk for a purely client-side app
+    // see lib.rs for hydration function instead
 }
