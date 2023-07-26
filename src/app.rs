@@ -1,3 +1,5 @@
+use std::env;
+
 use crate::error_template::{AppError, ErrorTemplate};
 use leptos::*;
 use leptos_meta::*;
@@ -40,6 +42,8 @@ pub fn App(cx: Scope) -> impl IntoView {
 /// Renders the home page of your application.
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
+    let region = env::var("FLY_REGION").unwrap_or("NONE".to_string());
+    let alloc_id = env::var("FLY_ALLOC_ID").unwrap_or("NONE".to_string());
     view! { cx,
         <div class="bar"/>
         <div class="content">
@@ -56,6 +60,10 @@ fn HomePage(cx: Scope) -> impl IntoView {
             <footer>
             <div class="left-footer">
             <p class="footer-text">"22nd century finance for all"</p>
+            </div>
+            <div class="centre-footer">
+            <p class="centre-footer-text dot">"●"</p>
+            <p class="centre-footer-text">{format!("{}_{}", region.to_uppercase(), alloc_id.to_uppercase())}</p>
             </div>
             <div class="right-footer">
             <p class="footer-text">"© 2123 Valera"</p>

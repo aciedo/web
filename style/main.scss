@@ -89,6 +89,32 @@ footer {
     align-self: stretch;
 }
 
+.centre-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.centre-footer-text {
+    color: #FFF;    
+    leading-trim: both;
+    text-edge: cap;
+    font-feature-settings: 'cv03' on, 'cv04' on, 'cv07' on, 'ss02' on, 'ss01' on;
+    font-family: Inter;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%;
+    text-transform: uppercase;
+}
+
+.dot {
+    color: var(--primary, #DCFF50);
+}
+
 .right-footer {
     display: flex;
     justify-content: flex-end;
