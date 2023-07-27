@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, sync::LazyLock};
 
 use crate::error_template::{AppError, ErrorTemplate};
 use leptos::*;
@@ -39,11 +39,19 @@ pub fn App(cx: Scope) -> impl IntoView {
     }
 }
 
+pub struct ServerInfo {
+    region: String,
+    alloc_id: String,
+}
+
+pub static SERVER_INFO: LazyLock<ServerInfo> = LazyLock::new(|| ServerInfo {
+    region: env::var("FLY_REGION").unwrap_or("NONE".to_string()).to_uppercase(),
+    alloc_id: env::var("FLY_ALLOC_ID").unwrap_or("NONE".to_string()).to_uppercase()
+});
+
 /// Renders the home page of your application.
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
-    let region = env::var("FLY_REGION").unwrap_or("NONE".to_string());
-    let alloc_id = env::var("FLY_ALLOC_ID").unwrap_or("NONE".to_string());
     view! { cx,
         <div class="bar"/>
         <div class="content">
@@ -63,7 +71,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
             </div>
             <div class="centre-footer">
             <p class="centre-footer-text dot">"●"</p>
-            <p class="centre-footer-text">{format!("{}_{}", region.to_uppercase(), alloc_id.to_uppercase())}</p>
+            <p class="centre-footer-text">{format!("{}_{}", SERVER_INFO.region, SERVER_INFO.alloc_id)}</p>
             </div>
             <div class="right-footer">
             <p class="footer-text">"© 2123 Valera"</p>
