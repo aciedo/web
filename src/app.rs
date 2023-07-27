@@ -17,6 +17,13 @@ pub fn App(cx: Scope) -> impl IntoView {
         // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/web.css"/>
         <Stylesheet href="/static/inter.css"/>
+        
+        <style>"
+            :root { font-family: InterVar, sans-serif; }
+            @supports (font-variation-settings: normal) {
+            :root { font-family: InterVar, sans-serif; font-optical-sizing: auto; }
+            }
+        "</style>
 
         // sets the document title
         <Title text="Valera"/>

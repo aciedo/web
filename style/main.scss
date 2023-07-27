@@ -3,11 +3,6 @@
   background: rgba(123, 97, 255, .99);
 }
 
-:root { font-family: "InterVar", sans-serif; }
-@supports (font-variation-settings: normal) {
-  :root { font-family: "InterVar", sans-serif; font-optical-sizing: auto; }
-}
-
 main {
     height: 100vh;
 }

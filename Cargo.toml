@@ -39,6 +39,10 @@ ssr = [
     "dep:tracing",
 ]
 
+[[bin]]
+name = "web"
+path = "src/main.rs"
+
 [package.metadata.cargo-all-features]
 denylist = ["axum", "tokio", "tower", "tower-http", "leptos_axum"]
 skip_feature_sets = [["ssr", "hydrate"]]
