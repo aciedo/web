@@ -27,6 +27,10 @@ primary_region = "lhr"
 [[statics]]
     guest_path = "site/static"
     url_prefix = "/static"
+    
+[[statics]]
+    guest_path = "site/pkg"
+    url_prefix = "/pkg"
 
 [deploy]
     strategy = "bluegreen"
