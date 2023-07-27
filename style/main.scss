@@ -3,6 +3,11 @@
   background: rgba(123, 97, 255, .99);
 }
 
+:root { font-family: "InterVar", sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: "InterVar", sans-serif; font-optical-sizing: auto; }
+}
+
 main {
     height: 100vh;
 }
@@ -73,7 +78,7 @@ footer {
     text-edge: cap;
     text-align: left;
     font-feature-settings: 'cv03' on, 'cv04' on, 'cv07' on, 'ss02' on, 'ss01' on;
-    font-family: InterDisplay;
+    font-family: InterVar;
     font-size: 8rem;
     font-style: normal;
     font-weight: 500;
@@ -99,20 +104,14 @@ footer {
 }
 
 .centre-footer-text {
-    color: #FFF;    
-    leading-trim: both;
-    text-edge: cap;
-    font-feature-settings: 'cv03' on, 'cv04' on, 'cv07' on, 'ss02' on, 'ss01' on;
-    font-family: Inter;
-    font-size: 0.875rem;
     font-style: normal;
-    font-weight: 700;
-    line-height: 100%;
-    text-transform: uppercase;
+    font-size: 0.875rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
 }
 
 .dot {
-    color: var(--primary, #DCFF50);
+    color: var(--primary, #DCFF50) !important;
 }
 
 .right-footer {
@@ -131,7 +130,7 @@ footer {
     font-feature-settings: 'cv03' on, 'cv04' on, 'cv07' on, 'ss02' on, 'ss01' on;
     
     /* Footer text */
-    font-family: InterDisplay;
+    font-family: InterVar;
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 500;

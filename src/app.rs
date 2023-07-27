@@ -70,8 +70,8 @@ fn HomePage(cx: Scope) -> impl IntoView {
             <p class="footer-text">"22nd century finance for all"</p>
             </div>
             <div class="centre-footer">
-            <p class="centre-footer-text dot">"●"</p>
-            <p class="centre-footer-text">{format!("{}_{}", SERVER_INFO.region, SERVER_INFO.alloc_id)}</p>
+            <p class="dot centre-footer-text footer-text">"●"</p>
+            <p class="centre-footer-text footer-text">{format!("{}_{}", SERVER_INFO.region, SERVER_INFO.alloc_id)}</p>
             </div>
             <div class="right-footer">
             <p class="footer-text">"© 2123 Valera"</p>
